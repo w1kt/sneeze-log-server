@@ -14,13 +14,17 @@
     "watch": "nodemon"
   },
   "dependencies": {
+    "bcrypt": "^3.0.5",
     "cookie-parser": "~1.4.3",
     "cuid": "^2.1.6",
     "debug": "~2.6.9",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "morgan": "~1.9.0",
     "npm-run-all": "^4.1.5",
+    "pg": "^7.9.0",
     "rimraf": "^2.6.3"
   },
   "devDependencies": {
@@ -28,6 +32,7 @@
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.3.4",
+    "eslint": "^5.15.3",
     "nodemon": "^1.18.10"
   }
 }
