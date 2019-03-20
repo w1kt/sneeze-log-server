@@ -1,5 +1,5 @@
 import moment from 'moment';
-import cuid from 'cuid';
+import uuid from 'uuid';
 
 class Reflection {
   constructor() {
@@ -12,7 +12,7 @@ class Reflection {
    */
   create(data) {
     const newReflection = {
-      id: cuid(),
+      id: uuid.v4(),
       success: data.success || '',
       lowPoint: data.lowPoint || '',
       takeAway: data.takeAway || '',
