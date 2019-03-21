@@ -5,6 +5,7 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index';
 import reflectionsRouter from './routes/Reflections';
+import usersRouter from './routes/Users';
 
 var app = express();
 
@@ -16,5 +17,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
 app.use('/api/v1/reflections', reflectionsRouter);
+app.use('/api/v1/users', usersRouter);
 
 export default app;
