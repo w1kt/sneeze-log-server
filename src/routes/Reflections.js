@@ -1,6 +1,6 @@
 import express from 'express';
 var router = express.Router();
-import Reflection from '../controllers/Reflections';
+import Reflection from '../usingDB/controllers/Reflections';
 
 router.post('/', Reflection.create);
 router.get('/', Reflection.getAll);

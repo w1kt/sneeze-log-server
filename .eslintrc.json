@@ -13,5 +13,6 @@
         "sourceType": "module"
     },
     "rules": {
+        "node/no-unsupported-features/es-syntax": false
     }
 }
