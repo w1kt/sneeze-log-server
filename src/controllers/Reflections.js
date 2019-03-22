@@ -74,12 +74,12 @@ const Reflection = {
    */
   async update(req, res) {
     const findOneQuery =
-      'SELECT * FROM reflections WHERE id=$1 AND ownder_id = $2';
+      'SELECT * FROM reflections WHERE id=$1 AND owner_id = $2';
     const updateOneQuery = `UPDATE reflections
       SET success=$1,low_point=$2,take_away=$3,modified_date=$4
       WHERE id=$5 AND owner_id = $6 returning *`;
     try {
-      const { rows } = await db.query(findOneQuery, [req.params.id]);
+      const { rows } = await db.query(findOneQuery, [req.params.id, req.user.id]);
       if (!rows[0]) {
         return res.status(404).send({ message: 'reflection not found' });
       }

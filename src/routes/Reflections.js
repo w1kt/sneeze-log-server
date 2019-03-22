@@ -1,7 +1,7 @@
 import express from 'express';
 var router = express.Router();
-import Reflection from '../usingDB/controllers/Reflections';
-import Auth from '../usingDB/middleware/Auth';
+import Reflection from '../controllers/Reflections';
+import Auth from '../middleware/Auth';
 
 router.post('/', Auth.verifyToken, Reflection.create);
 router.get('/', Auth.verifyToken, Reflection.getAll);

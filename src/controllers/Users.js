@@ -10,7 +10,7 @@ const User = {
    * @param {object} res
    * @returns {object} reflection object
    */
-  async create(req, res) {
+  async register(req, res) {
     if (!req.body.email || !req.body.password) {
       return res.status(400).send({ message: 'Username or password missing' });
     }

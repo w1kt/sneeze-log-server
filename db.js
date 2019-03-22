@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const pool = new Pool({
-  database: "reflection_db"
+  database: 'reflection_db'
 });
 
 pool.on('connect', () => {
@@ -65,10 +65,19 @@ const createUserTable = () => {
 };
 
 /**
- * Drop Reflection Table
+ * Create Backup table
  */
-const dropReflectionTable = () => {
-  const queryText = 'DROP TABLE IF EXISTS reflections returning *';
+const createBackupTable = () => {
+  const queryText = `CREATE TABLE IF NOT EXISTS
+    backup(
+      id UUID PRIMARY KEY,      
+      owner_id UUID NOT NULL,
+      store JSONB NOT NULL,
+      created_date TIMESTAMP,
+      modified_date TIMESTAMP,
+      UNIQUE FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
+    )
+  `;
   pool
     .query(queryText)
     .then(res => {
@@ -80,11 +89,9 @@ const dropReflectionTable = () => {
       pool.end();
     });
 };
-/**
- * Drop User Table
- */
-const dropUserTable = () => {
-  const queryText = 'DROP TABLE IF EXISTS users returning *';
+
+const dropTable = tableName => {
+  const queryText = `DROP TABLE IF EXISTS ${tableName} returning *`;
   pool
     .query(queryText)
     .then(res => {
@@ -95,20 +102,23 @@ const dropUserTable = () => {
       console.log(err);
       pool.end();
     });
-};
+}
+
 /**
  * Create All Tables
  */
 const createAllTables = () => {
   createUserTable();
   createReflectionTable();
+  createBackupTable();
 };
 /**
  * Drop All Tables
  */
 const dropAllTables = () => {
-  dropUserTable();
-  dropReflectionTable();
+  dropTable('users');
+  dropTable('reflections');
+  dropTable('backup');
 };
 
 pool.on('remove', () => {
@@ -120,8 +130,7 @@ module.exports = {
   createReflectionTable,
   createUserTable,
   createAllTables,
-  dropUserTable,
-  dropReflectionTable,
+  dropTable,
   dropAllTables
 };
 
