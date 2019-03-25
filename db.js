@@ -71,11 +71,11 @@ const createBackupTable = () => {
   const queryText = `CREATE TABLE IF NOT EXISTS
     backup(
       id UUID PRIMARY KEY,      
-      owner_id UUID NOT NULL,
+      owner_id UUID UNIQUE NOT NULL,
       store JSONB NOT NULL,
       created_date TIMESTAMP,
       modified_date TIMESTAMP,
-      UNIQUE FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
+      FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
     )
   `;
   pool
@@ -91,7 +91,7 @@ const createBackupTable = () => {
 };
 
 const dropTable = tableName => {
-  const queryText = `DROP TABLE IF EXISTS ${tableName} returning *`;
+  const queryText = `DROP TABLE IF EXISTS ${tableName} CASCADE`;
   pool
     .query(queryText)
     .then(res => {
@@ -130,6 +130,7 @@ module.exports = {
   createReflectionTable,
   createUserTable,
   createAllTables,
+  createBackupTable,
   dropTable,
   dropAllTables
 };

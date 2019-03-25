@@ -3,9 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const pool = new Pool(({
-  database: "reflection_db"  
-}))
+const pool = new Pool() // See .env file for connection settings
 
 export default {
   query(text, params) {

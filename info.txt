@@ -1,0 +1,1 @@
+docker run --rm   --name pg-docker -e POSTGRES_USER=James -e POSTGRES_PASSWORD=qweqwe -e POSTGRES_DB=reflection_db -d -p 5432:5432 -v $HOME/dev/docker/volumes/sneeze-log-server/postgres:/var/lib/postgresql/data  postgres

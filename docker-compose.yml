@@ -1,0 +1,24 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: npm run watch
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://James:qweqwe@postgres:5432/reflection_db
+  postgres:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: James
+      POSTGRES_DB: reflection_db
+      POSTGRES_PASSWORD: qweqwe
+    volumes:
+      - ./create-tables.sql:/docker-entrypoint-initdb.d/create-tables.sql
