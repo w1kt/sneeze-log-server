@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const Helper = {
+const Helpers = {
   /**
    * Hash Password Method
    * @param {string} password
@@ -44,4 +44,4 @@ const Helper = {
   }
 };
 
-export default Helper;
+export default Helpers;

@@ -1,8 +1,3 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
 "use strict";
 
 var _app = _interopRequireDefault(require("../app"));
@@ -13,7 +8,10 @@ var _http = _interopRequireDefault(require("http"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var debug = (0, _debug.default)('sneeze-log-server:server');
+/**
+ * Module dependencies.
+ */
+const debug = (0, _debug.default)('sneeze-log-server:server');
 /**
  * Get port from environment and store in Express.
  */
