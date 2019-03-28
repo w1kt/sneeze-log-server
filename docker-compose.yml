@@ -22,3 +22,4 @@ services:
       POSTGRES_PASSWORD: qweqwe
     volumes:
       - ./create-tables.sql:/docker-entrypoint-initdb.d/create-tables.sql
+      - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
