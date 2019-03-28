@@ -1,9 +1,16 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
+const isProduction = process.env.NODE_ENV === "production";
+
 dotenv.config();
 
-const pool = new Pool() // See .env file for connection settings
+const pool = new Pool(
+  {
+    connectionString: process.env.DATABASE_URL,
+    ssl: isProduction,
+  }
+) // See .env file for connection settings
 
 export default {
   query(text, params) {
