@@ -37,8 +37,11 @@ const Helpers = {
       {
         userId: id
       },
-      process.env.SECRET,
-      { expiresIn: '7d' }
+      process.env.SECRET
+      /** TODO: implement short expiry along with OAuth2 style refresh token.
+      * This piece of work is precluded by a means (web client?) of revoking refresh tokens.
+      **/
+      
     );
     return token;
   }
