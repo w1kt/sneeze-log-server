@@ -4,7 +4,7 @@ import Backup from '../controllers/Backup';
 
 var router = express.Router();
 
-router.post('/push', Auth.verifyToken, Backup.push);
-router.get('/pull', Auth.verifyToken, Backup.pull);
+router.post('/push', Auth.verifyAccountToken, Backup.push);
+router.get('/pull', Auth.verifyAccountToken, Backup.pull);
 
 export default router;

@@ -1,12 +1,12 @@
 import express from 'express';
-import reflectionsRouter from './Reflections';
 import userRouter from './User';
 import backupRouter from './Backup'
+import communityRouter from './Community';
 
 var router = express.Router();
 
-router.use('/reflections', reflectionsRouter);
 router.use('/users', userRouter);
 router.use('/backup', backupRouter);
+router.use('/community', communityRouter)
 
 export default router

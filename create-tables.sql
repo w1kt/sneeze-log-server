@@ -8,18 +8,6 @@ CREATE TABLE IF NOT EXISTS
     );
 
 CREATE TABLE IF NOT EXISTS
-    reflections(
-        id UUID PRIMARY KEY,
-        success TEXT NOT NULL,
-        low_point TEXT NOT NULL,
-        take_away TEXT NOT NULL,
-        owner_id UUID NOT NULL,
-        created_date TIMESTAMP,
-        modified_date TIMESTAMP,
-        FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
-    );
-
-CREATE TABLE IF NOT EXISTS
     backup(
       id UUID PRIMARY KEY,      
       owner_id UUID UNIQUE NOT NULL,
@@ -27,4 +15,17 @@ CREATE TABLE IF NOT EXISTS
       created_date TIMESTAMP,
       modified_date TIMESTAMP,
       FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
+    );
+
+CREATE TABLE IF NOT EXISTS
+    community(
+        id UUID PRIMARY KEY,
+        category TEXT NOT NULL,
+        count NUMERIC NOT NULL,
+        avg_per_day NUMERIC NOT NULL,
+        avg_per_day_nominal NUMERIC NOT NULL,
+        avg_mode NUMERIC NOT NULL,
+        avg_hours_between_logs NUMERIC NOT NULL,
+        created_date TIMESTAMP,
+        modified_date TIMESTAMP
     );
