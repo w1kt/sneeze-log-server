@@ -37,7 +37,7 @@ const Helpers = {
       {
         userId: id
       },
-      process.env.ACCOUNTS_SECRET
+      process.env.ACCOUNT_SECRET
       /** TODO: implement short expiry along with OAuth2 style refresh token.
       * This piece of work is precluded by a means (web client?) of revoking refresh tokens.
       **/
