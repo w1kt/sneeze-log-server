@@ -78,9 +78,9 @@ const User = {
     const auth = {
      type: 'OAuth2',
      user: 'loggableapp@gmail.com',
-     clientId: '729794276972-06rd2lkqlnvt2m26a5387v91omt0n6h2.apps.googleusercontent.com',
-     clientSecret: 'Mu0gT7p6eF1U44KCHZB7oMWf',
-     refreshToken: '1//04u5SdD2oAL3UCgYIARAAGAQSNwF-L9Ir-FMcy1POzJr0ns8_OeAa7BDCk9GGnchNH-MbcOIBZGQwBk2Km8DNwux1oFxY2g2ZIHg'
+     clientId: process.env.EMAIL_CLIENT_ID,
+     clientSecret: process.env.EMAIL_CLIENT_SECRET,
+     refreshToken: process.env.EMAIL_REFRESH_TOKEN
    }
    let transporter = nodemailer.createTransport({
      service: 'gmail',
@@ -95,7 +95,7 @@ const User = {
    }
   transporter.sendMail(mailOpts, (err, res) => {
     if (err) {
-      return console.log('err');
+      return console.log(err);
     } else {
       console.log(JSON.stringify(res))
     }
