@@ -6,6 +6,5 @@ import Auth from '../middleware/Auth';
 router.post('/register', User.register);
 router.post('/login', User.login);
 router.delete('/deleteUser', Auth.verifyAccountToken, User.delete);
-router.post('/forgotPassword', Auth.verifyAppToken, User.forgotPassword)
 
 export default router
