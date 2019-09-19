@@ -14,7 +14,7 @@ const PasswordRecovery = {
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
-  }
+  },
 };
 
 export default PasswordRecovery;

@@ -10,5 +10,12 @@ router.get(
   PRMiddlware.checkEmailExists,
   PasswordRecovery.getVCode
 );
+router.get(
+  '/verifyVCode',
+  Auth.verifyAppToken,
+  PRMiddlware.checkEmailExists,
+  PRMiddlware.verifyVCode,
+  (req, res) => res.status(200).send({message: 'Verification code is valid'})
+);
 
 export default router;
