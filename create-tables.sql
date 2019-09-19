@@ -29,3 +29,9 @@ CREATE TABLE IF NOT EXISTS
         created_date TIMESTAMP,
         modified_date TIMESTAMP
     );
+
+CREATE TABLE IF NOT EXISTS
+    password_recovery(
+        email VARCHAR(128) PRIMARY KEY REFERENCES users (email) ON DELETE CASCADE,
+        vcode_jwt TEXT NOT NULL
+    );

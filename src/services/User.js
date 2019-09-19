@@ -31,7 +31,7 @@ const User = {
 
     try {
       const { rows } = await db.query(query, values);
-      const token = Helpers.generateToken(rows[0].id);
+      const token = Helpers.generateToken({ userId: rows[0].id });
       return token;
     } catch (error) {
       if (error.routine === "_bt_check_unique") {
@@ -61,7 +61,7 @@ const User = {
       if (!Helpers.comparePassword(rows[0].password, password)) {
         throw Error("Incorrect email or password");
       }
-      const token = Helpers.generateToken(rows[0].id);
+      const token = Helpers.generateToken({ userId: rows[0].id });
       return token;
     } catch (error) {
       throw Error(error);

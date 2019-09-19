@@ -1,32 +1,20 @@
-import nodemailer from 'nodemailer';
+import PasswordRecoveryService from '../services/PasswordRecovery';
 
 const PasswordRecovery = {
+  /**
+   * Creates a verification code, stores encrypted version in db and sends to email
+   * @param {*} req expexts req.userEmail to be set
+   * @param {*} res
+   */
   async getVCode(req, res) {
-    const auth = {
-     type: 'OAuth2',
-     user: 'loggableapp@gmail.com',
-     clientId: process.env.EMAIL_CLIENT_ID,
-     clientSecret: process.env.EMAIL_CLIENT_SECRET,
-     refreshToken: process.env.EMAIL_REFRESH_TOKEN
-   }
-   let transporter = nodemailer.createTransport({
-     service: 'gmail',
-     auth
-   });
-   const mailOpts = { 
-    from: 'Loggable <noreply@loggable-app.com>',
-    to: req.userEmail,
-    subject: 'test',
-    text: 'this is a test',
-    html: '<p>this is a test</p>'
-   }
-  transporter.sendMail(mailOpts, (err, res) => {
-    if (err) {
-      return console.log(err);
-    } else {
-      console.log(JSON.stringify(res))
+    try {
+      const vCode = await PasswordRecoveryService.generateVCode(req.userEmail);
+      await PasswordRecoveryService.sendVCode(req.userEmail, vCode);
+      res.status(200).send({ message: 'Verification code sent' });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
     }
-  })
   }
-}
- export default PasswordRecovery;
+};
+
+export default PasswordRecovery;
