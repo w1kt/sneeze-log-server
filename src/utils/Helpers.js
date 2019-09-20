@@ -29,19 +29,18 @@ const Helpers = {
   },
   /**
    * Generate Token
-   * @param {string} id
+   * @param {object} contents
    * @returns {string} token
    */
-  generateToken(id) {
+  generateToken(contents, expiresIn) {
+    const opts = expiresIn ? { expiresIn } : {};
     const token = jwt.sign(
-      {
-        userId: id
-      },
-      process.env.ACCOUNT_SECRET
+      { ...contents },
+      process.env.ACCOUNT_SECRET,
       /** TODO: implement short expiry along with OAuth2 style refresh token.
-      * This piece of work is precluded by a means (web client?) of revoking refresh tokens.
-      **/
-      
+       * This piece of work is precluded by a means (web client?) of revoking refresh tokens.
+       **/
+      { ...opts }
     );
     return token;
   }
