@@ -4,13 +4,13 @@ import PRMiddlware from '../middleware/PasswordRecovery';
 import Auth from '../middleware/Auth';
 
 var router = express.Router();
-router.get(
+router.post(
   '/getVCode',
   Auth.verifyAppToken,
   PRMiddlware.checkEmailExists,
   PasswordRecovery.getVCode
 );
-router.get(
+router.post(
   '/verifyVCode',
   Auth.verifyAppToken,
   PRMiddlware.checkEmailExists,
