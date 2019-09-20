@@ -15,7 +15,14 @@ router.get(
   Auth.verifyAppToken,
   PRMiddlware.checkEmailExists,
   PRMiddlware.verifyVCode,
-  (req, res) => res.status(200).send({message: 'Verification code is valid'})
+  (req, res) => res.status(200).send({ message: 'Verification code is valid' })
+);
+router.post(
+  '/changePassword',
+  Auth.verifyAppToken,
+  PRMiddlware.checkEmailExists,
+  PRMiddlware.verifyVCode,
+  PasswordRecovery.changePassword
 );
 
 export default router;

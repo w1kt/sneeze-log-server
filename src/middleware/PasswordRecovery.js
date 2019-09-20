@@ -33,7 +33,9 @@ const PasswordRecovery = {
     }
   },
   /**
-   * Verifies that a supplied verification code matches the supplied email by checking db
+   * Verifies that a supplied verification code matches the supplied email by checking db.
+   * If valid will set req.vCodIsValid to true.
+   * This middleware will not call next() if the vCode is not valid
    * @param {*} req expects req.userEmail to be set
    * @param {*} res
    */
@@ -55,7 +57,7 @@ const PasswordRecovery = {
       if (vCode !== req.body.vCode) {
         return res.status(403).send({ message: 'Code invalid. Please try getting a new verification code' });
       }
-      req.vCode = vCode;
+      req.vCodeIsValid = true;
       next();
     } catch (error) {
       if (error.name === 'TokenExpiredError') {
