@@ -1,5 +1,6 @@
-import db from '../db';
 import jwt from 'jsonwebtoken';
+import db from '../db';
+import PasswordRecoveryService from '../services/PasswordRecovery';
 
 const PasswordRecovery = {
   /**
@@ -20,11 +21,9 @@ const PasswordRecovery = {
       const query = `SELECT * FROM users WHERE email = '${email}'`;
       const { rows } = await db.query(query);
       if (!rows[0]) {
-        return res
-          .status(404)
-          .send({
-            message: 'There is no account associated with that email address'
-          });
+        return res.status(404).send({
+          message: 'There is no account associated with that email address'
+        });
       }
       req.userEmail = email;
       next();
@@ -53,19 +52,21 @@ const PasswordRecovery = {
       }
       let vCodeJWT = rows[0].vcode_jwt;
       vCodeJWT = jwt.verify(vCodeJWT, process.env.ACCOUNT_SECRET);
-      const vCode = vCodeJWT.vCode; 
+      const vCode = vCodeJWT.vCode;
       if (vCode !== req.body.vCode) {
-        return res.status(403).send({ message: 'Code invalid. Please try getting a new verification code' });
+        return res.status(403).send({
+          message: 'Code invalid. Please try getting a new verification code'
+        });
       }
       req.vCodeIsValid = true;
       next();
     } catch (error) {
       if (error.name === 'TokenExpiredError') {
-        return res
-          .status(403)
-          .send({
-            message: 'Code expired. Please try getting a new verification code'
-          });
+        // Clean up the expired vCode from db
+        PasswordRecoveryService.deleteVCode(req.userEmail);
+        return res.status(403).send({
+          message: 'Code expired. Please try getting a new verification code'
+        });
       }
       return res.status(500).send({ message: 'An error has occurred' });
     }
