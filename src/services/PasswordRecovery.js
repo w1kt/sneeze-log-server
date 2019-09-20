@@ -3,6 +3,7 @@ import randomatic from 'randomatic';
 import Helpers from '../utils/Helpers';
 import db from '../db';
 import moment from 'moment';
+import getPasswordRecoveryEmail from '../email_templates/getPasswordRecoveryEmail';
 
 const PasswordRecovery = {
   /**
@@ -66,12 +67,13 @@ const PasswordRecovery = {
         service: 'gmail',
         auth
       });
+      const emailContent = getPasswordRecoveryEmail(vCode);
       const mailOpts = {
         from: 'Loggable <noreply@loggable-app.com>',
         to: email,
-        subject: 'test',
-        text: 'this is a test',
-        html: `<p>Your verification code is ${vCode}</p>`
+        subject: 'Password Recovery',
+        text: emailContent.text,
+        html: emailContent.html
       };
       await transporter.sendMail(mailOpts);
     } catch (error) {
