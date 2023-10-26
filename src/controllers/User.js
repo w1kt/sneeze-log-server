@@ -75,6 +75,20 @@ const User = {
       }
       return res.status(statusCode).send({ message: error.message });
     }
+  },
+  /**
+   * Send account deletion email
+   * @param {*} req 
+   * @param {*} res 
+   */
+  async sendAccountDeletionEmail(req, res) {
+    try {
+      await UserService.sendAccountDeletionEmail(req.query.email);
+      return res.status(200).send({ message: 'Email sent, please allow 5 minutes for it to arrive' });
+    }
+    catch (error) {
+      return res.status(500).send({ message: error.message });
+    }
   }
 };
 

@@ -3,6 +3,7 @@ import uuidv4 from "uuid/v4";
 import moment from "moment";
 import db from "../db";
 import { NoRecordFoundError } from "../utils/CustomErrors";
+import getAccountDeletionEmail from "../email_templates/getAccountDeletionEmail";
 
 const User = {
   /**
@@ -72,14 +73,44 @@ const User = {
    * @param {string} id 
    */
   async delete(id) {
-    const query = `DELETE FROM users WHERE id=$1 returning *`;
     try {
-      const { rows } = await db.query(query, [id]);
+      let query = `SELECT email FROM users WHERE id=$1`;
+      let { rows } = await db.query(query, [id]);
       if (!rows[0]) {
         throw new NoRecordFoundError("User not found");
       }
+      const email = rows[0].email;
+      query = `DELETE FROM users WHERE id=$1`;
+      await db.query(query, [id]);
+      query = `DELETE FROM backup WHERE owner_id=$1`; 
+      await db.query(query, [id]);
+      query = `DELETE FROM password_recovery WHERE email=$1`
+      await db.query(query, [email]);
     } catch (error) {
       throw error;
+    }
+  },
+  /**
+   * Generate a JWT with the users email, send an email with a link to delete the account 
+   * @param {string} email
+   */
+  async sendAccountDeletionEmail(email) {
+    const query = `
+    SELECT * FROM users WHERE email = $1
+  `;
+    let token = "";
+    const { rows } = await db.query(query, [email]);
+    if (!rows[0]) {
+      throw Error(
+        "The email address that you've entered doesn't match any account"
+      );
+    }
+    token = Helpers.generateToken({ userId: rows[0].id }, '1h');
+    const apiUrl = `${process.env.API_URL}`
+    try {
+      await Helpers.sendEmail(email, "Account Deletion", getAccountDeletionEmail(`${apiUrl}/loggable/deleteAccountConfirmed?token=${token}`));
+    } catch (error) {
+      throw new Error('Unable to send account deletion email at this time');
     }
   }
 };

@@ -11,12 +11,13 @@ const PasswordRecovery = {
    * @returns {object|void} response object
    */
   async checkEmailExists(req, res, next) {
-    if (!req.body.email) {
+    let email = req.body.email || req.query.email;
+    if (!email) {
       return res
         .status(403)
         .send({ message: 'Please provide an email address' });
     }
-    const email = req.body.email.trim().toLowerCase();
+    email = email.trim().toLowerCase();
     try {
       const query = `SELECT * FROM users WHERE email = '${email}'`;
       const { rows } = await db.query(query);

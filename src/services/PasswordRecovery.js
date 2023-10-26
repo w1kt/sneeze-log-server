@@ -1,4 +1,3 @@
-import nodemailer from 'nodemailer';
 import randomatic from 'randomatic';
 import Helpers from '../utils/Helpers';
 import db from '../db';
@@ -56,26 +55,7 @@ const PasswordRecovery = {
    */
   async sendVCode(email, vCode) {
     try {
-      const auth = {
-        type: 'OAuth2',
-        user: process.env.EMAIL_CLIENT_ADDRESS,
-        clientId: process.env.EMAIL_CLIENT_ID,
-        clientSecret: process.env.EMAIL_CLIENT_SECRET,
-        refreshToken: process.env.EMAIL_REFRESH_TOKEN
-      };
-      let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth
-      });
-      const emailContent = getPasswordRecoveryEmail(vCode);
-      const mailOpts = {
-        from: 'Loggable <noreply@loggable-app.com>',
-        to: email,
-        subject: 'Password Recovery',
-        text: emailContent.text,
-        html: emailContent.html
-      };
-      await transporter.sendMail(mailOpts);
+      await Helpers.sendEmail(email, "Password Recovery", getPasswordRecoveryEmail(vCode))
     } catch (error) {
       throw new Error('Unable to send verification code at this time');
     }

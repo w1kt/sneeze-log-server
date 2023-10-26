@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
 
 const Helpers = {
   /**
@@ -43,6 +44,33 @@ const Helpers = {
       { ...opts }
     );
     return token;
+  },
+  /**
+   * Sends an email
+   * @param {string} email 
+   * @param {string} subject
+   * @param {{ text: string, html: string }} emailContent 
+   */
+  async sendEmail(email, subject, emailContent) {
+    const auth = {
+      type: 'OAuth2',
+      user: process.env.EMAIL_CLIENT_ADDRESS,
+      clientId: process.env.EMAIL_CLIENT_ID,
+      clientSecret: process.env.EMAIL_CLIENT_SECRET,
+      refreshToken: process.env.EMAIL_REFRESH_TOKEN
+    };
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth
+    });
+    const mailOpts = {
+      from: 'Loggable <noreply@loggable-app.com>',
+      to: email,
+      subject,
+      text: emailContent.text,
+      html: emailContent.html
+    };
+    await transporter.sendMail(mailOpts);
   }
 };
 

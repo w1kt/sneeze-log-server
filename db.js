@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 
-dotenv.config();
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 const pool = new Pool({
   database: 'reflection_db'
