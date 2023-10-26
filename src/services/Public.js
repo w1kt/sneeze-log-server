@@ -9,6 +9,8 @@ const Public = {
       <html>
         <head>
           <title>Loggable Delete Account</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
           <script type="text/javascript" src="/javascripts/public.js"></script>
         </head>
         <body>
@@ -27,7 +29,7 @@ const Public = {
   async getDeleteAccountConfirmedPage(token) {
     const decoded = await jwt.verify(token, process.env.ACCOUNT_SECRET);
     await UserService.delete(decoded.userId);
-    return 'Your Loggable account and data has been deleted';
+    return 'Your Loggable account and data have been deleted';
   }
 }
 
