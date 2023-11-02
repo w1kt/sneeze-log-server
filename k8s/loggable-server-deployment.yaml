@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loggable-server
+  labels:
+    app: loggable-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loggable-server
+  template:
+    metadata:
+      labels:
+        app: loggable-server
+    spec:
+      containers:
+      - name: loggable-server
+        image: sneeze-log-server_web:latest
+        imagePullPolicy: Never
+        command: ["npm", "run", "prod"]
+        ports:
+          - name: http
+            containerPort: 3000
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: postgres-host
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: postgres-port
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: postgres-dbname
+        - name: ACCOUNT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: loggable-server-secret
+              key: account-secret
+        - name: APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: loggable-server-secret
+              key: app-secret
+        - name: EMAIL_CLIENT_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: loggable-server-configmap
+              key: email-client-address
+        - name: EMAIL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: loggable-server-secret
+              key: email-client-secret
+        - name: EMAIL_REFRESH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: loggable-server-secret
+              key: email-refresh-token
+        - name: API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: loggable-server-configmap
+              key: api-url
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loggable-server
+spec:
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: loggable-server

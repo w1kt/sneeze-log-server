@@ -6,7 +6,7 @@ metadata:
     type: local
 spec:
   capacity:
-    storage: 4Gi
+    storage: 25Gi
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
@@ -21,7 +21,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - k3d-my-cluster-agent-0
+          - k3d-loggable-server-0
 
 ---
 kind: PersistentVolumeClaim
@@ -34,4 +34,4 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 4Gi
+      storage: 25Gi

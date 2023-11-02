@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loggable-server-ingress
+spec:
+  ingressClassName: ngrok
+  rules:
+    - host: fully-loyal-tahr.ngrok-free.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: loggable-server
+                port:
+                  number: 3000

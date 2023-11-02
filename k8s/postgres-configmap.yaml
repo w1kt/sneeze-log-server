@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+data:
+  postgres-host: postgres-service
+  postgres-port: "5432"
+  postgres-dbname: loggable_db

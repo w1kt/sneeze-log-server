@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: loggable-server-configmap
+data:
+  email-client-address: loggableapp@gmail.com
+  email-client-id: 729794276972-06rd2lkqlnvt2m26a5387v91omt0n6h2.apps.googleusercontent.com
+  api-url: https://fully-loyal-tahr.ngrok-free.app
