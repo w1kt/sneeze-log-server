@@ -63,6 +63,11 @@ spec:
             configMapKeyRef:
               name: loggable-server-configmap
               key: email-client-address
+        - name: EMAIL_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: loggable-server-configmap
+              key: email-client-id
         - name: EMAIL_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
