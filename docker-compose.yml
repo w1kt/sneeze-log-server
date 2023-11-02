@@ -11,7 +11,11 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://James:qweqwe@postgres:5432/reflection_db
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: James
+      DB_NAME: reflection_db
+      DB_PASSWORD: qweqwe
   postgres:
     image: postgres:alpine
     ports:
