@@ -21,6 +21,7 @@ services:
     ports:
       - "5432:5432"
     environment:
+      POSTGRES_HOST: postgres
       POSTGRES_USER: James
       POSTGRES_DB: reflection_db
       POSTGRES_PASSWORD: qweqwe

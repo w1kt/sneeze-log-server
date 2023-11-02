@@ -1,4 +1,4 @@
-FROM node:9-alpine
+FROM node:20-alpine
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
 COPY . /usr/app
@@ -8,7 +8,7 @@ RUN mkdir -p $HOME/docker/volumes/postgres
 # --no-cache: download package index on-the-fly, no need to cleanup afterwards
 # --virtual: bundle packages, remove whole bundle at once, when done
 RUN apk --no-cache --virtual build-dependencies add \
-    python \
+    python3 \
     make \
     g++ \
     && npm install \
