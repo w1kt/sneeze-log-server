@@ -17,6 +17,12 @@ services:
       DB_USER: James
       DB_NAME: reflection_db
       DB_PASSWORD: qweqwe
+      ACCOUNT_SECRET: test-account-secret
+      APP_SECRET: test-app-secret
+      EMAIL_CLIENT_ADDRESS: loggableapp@gmail.com
+      EMAIL_CLIENT_ID: 729794276972-06rd2lkqlnvt2m26a5387v91omt0n6h2.apps.googleusercontent.com
+      EMAIL_CLIENT_SECRET: ${EMAIL_CLIENT_SECRET}
+      EMAIL_REFRESH_TOKEN: ${EMAIL_REFRESH_TOKEN}
   postgres:
     image: postgres:alpine
     ports:
