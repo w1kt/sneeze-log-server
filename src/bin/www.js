@@ -7,8 +7,12 @@
 import app from '../app';
 import debugLib from 'debug';
 import http from 'http';
+import logger from '../utils/Logger';
+
 
 const debug = debugLib('sneeze-log-server:server');
+
+logger.info("server starting...");
 
 /**
  * Get port from environment and store in Express.
@@ -30,6 +34,8 @@ var server = http.createServer(app);
 server.listen(port, "0.0.0.0");
 server.on('error', onError);
 server.on('listening', onListening);
+
+logger.info("server started");
 
 /**
  * Normalize a port into a number, string, or false.
@@ -56,6 +62,7 @@ function normalizePort(val) {
  */
 
 function onError(error) {
+  logger.error(error);
   if (error.syscall !== 'listen') {
     throw error;
   }

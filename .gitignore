@@ -4,3 +4,4 @@ dist
 k8s/**secret.yaml
 .env.production
 secrets
+loggable-api-2023.log

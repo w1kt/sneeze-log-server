@@ -1,4 +1,5 @@
-import CommunityService from '../services/Community';
+import CommunityService from "../services/Community";
+import logger from "../utils/Logger";
 
 const Community = {
   /**
@@ -11,44 +12,58 @@ const Community = {
    * @returns updated stats as part of express response.
    */
   async sync(req, res) {
+    logger.info("received request in /community/sync", {
+      transactionId: req.transactionId,
+    });
     let comStats = req.body.comStats;
     if (!comStats) {
+      logger.info("no community stats in request", {
+        transactionId: req.transactionId,
+      });
       return res
         .status(400)
-        .send({ message: 'No community stats found payload' });
+        .send({ message: "No community stats found payload" });
     }
     comStats = comStats.filter(
-      currComStats =>
-        typeof currComStats.category === 'string' &&
-        typeof currComStats.avgPerDay === 'number' &&
-        typeof currComStats.avgPerDayNominal === 'number' &&
-        typeof currComStats.mode === 'number' &&
-        typeof currComStats.avgHoursBetweenLogs === 'number'
+      (currComStats) =>
+        typeof currComStats.category === "string" &&
+        typeof currComStats.avgPerDay === "number" &&
+        typeof currComStats.avgPerDayNominal === "number" &&
+        typeof currComStats.mode === "number" &&
+        typeof currComStats.avgHoursBetweenLogs === "number"
     );
     if (comStats.length === 0) {
-      return res
-        .status(400)
-        .send({
-          message:
-            'No valid community stats found in payload. Check required properties and data types.'
-        });
+      logger.info("no valid community stats in request", {
+        transactionId: req.transactionId,
+        comStats
+      });
+      return res.status(400).send({
+        message:
+          "No valid community stats found in payload. Check required properties and data types.",
+      });
     }
     try {
       const updatedComStats = await CommunityService.sync(comStats);
       res.status(200).send({
-        comStats: updatedComStats.map(currComStats => ({
+        comStats: updatedComStats.map((currComStats) => ({
           category: currComStats.category,
           count: currComStats.count,
           avgPerDay: currComStats.avg_per_day,
           avgPerDayNominal: currComStats.avg_per_day_nominal,
           avgMode: currComStats.avg_mode,
-          avgHoursBetweenLogs: currComStats.avg_hours_between_logs
-        }))
+          avgHoursBetweenLogs: currComStats.avg_hours_between_logs,
+        })),
       });
     } catch (error) {
+      logger.error("failed to sync community stats", {
+        error: error.message,
+        errorCode: error.code,
+        comStats,
+        transactionId: req.transactionId,
+      });
       res.status(400).send({ message: error.message });
     }
-  }
+  },
 };
 
 export default Community;
