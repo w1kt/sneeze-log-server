@@ -7,6 +7,7 @@ const transport = new winston.transports.DailyRotateFile({
   maxSize: "20m",
   maxFiles: "3",
   zippedArchive: true,
+  dirname: './logs' 
 });
 
 const { combine, timestamp, json } = winston.format;

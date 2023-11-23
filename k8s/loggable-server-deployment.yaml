@@ -22,6 +22,9 @@ spec:
         ports:
           - name: http
             containerPort: 3000
+        volumeMounts:
+        - mountPath: /usr/app/logs
+          name: logs
         env:
         - name: DB_USER
           valueFrom:
@@ -85,6 +88,10 @@ spec:
               key: api-url
       imagePullSecrets:
         - name: regcred
+      volumes:
+        - name: logs
+          persistentVolumeClaim:
+            claimName: pg-pvc
 ---
 apiVersion: v1
 kind: Service
