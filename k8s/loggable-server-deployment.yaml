@@ -18,7 +18,7 @@ spec:
       - name: loggable-server
         image: sneeze-log-server_web:latest
         imagePullPolicy: Never
-        command: ["npm", "run", "prod"]
+        command: ["npm", "run", "server:prod"]
         ports:
           - name: http
             containerPort: 3000
