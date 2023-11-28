@@ -35,7 +35,7 @@ const Community = {
     if (comStats.length === 0) {
       logger.info("no valid community stats in request", {
         transactionId: req.transactionId,
-        comStats
+        comStats,
       });
       return res.status(400).send({
         message:
@@ -43,6 +43,10 @@ const Community = {
       });
     }
     try {
+      logger.info("updating community stats", {
+        transactionId: req.transactionId,
+        comStats,
+      });
       const updatedComStats = await CommunityService.sync(comStats);
       res.status(200).send({
         comStats: updatedComStats.map((currComStats) => ({

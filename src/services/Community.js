@@ -1,6 +1,7 @@
 import moment from 'moment';
 import uuidv4 from 'uuid/v4';
 import db from '../db';
+import logger from '../utils/Logger';
 
 const Community = {
   /**
@@ -10,7 +11,7 @@ const Community = {
    * @requires authenticated request (app-token).
    * @param {JSON} comStatsArray
    */
-  async sync(comStatsArray) {
+  async sync(comStatsArray, transactionId) {
     const queries = await comStatsArray.map(async comStats => {
       let query = `SELECT * FROM community WHERE category = '${
         comStats.category
@@ -20,6 +21,7 @@ const Community = {
         let { rows } = await db.query(query);
         const categoryExists = !!rows.length;
         if (!categoryExists) {
+          logger.info('creating new community stats category', { transactionId, comStats.category })
           query = `
           INSERT INTO 
           community(id, category, count, avg_per_day, avg_per_day_nominal,
@@ -39,6 +41,7 @@ const Community = {
             moment(new Date())
           ];
         } else {
+          logger.info('updating community stats category', { transactionId, comStats.category })
           query = `
             UPDATE community
             SET avg_per_day=$1, avg_per_day_nominal=$2, avg_mode=$3,
