@@ -47,26 +47,26 @@ CREATE TABLE IF NOT EXISTS
         lp_required INTEGER NOT NULL
     );
 
-INSERT INTO level (title, lp_required) VALUES ('Log Laughingstock', 50);
-INSERT INTO level (title, lp_required) VALUES ('Log Leaf', 65);
-INSERT INTO level (title, lp_required) VALUES ('Log Lemon', 85);
-INSERT INTO level (title, lp_required) VALUES ('Log Lobster', 111);
-INSERT INTO level (title, lp_required) VALUES ('Log Lamb', 144);
-INSERT INTO level (title, lp_required) VALUES ('Log Lizard', 187);
-INSERT INTO level (title, lp_required) VALUES ('Log Leprechaun', 243);
-INSERT INTO level (title, lp_required) VALUES ('Log Layman', 316);
-INSERT INTO level (title, lp_required) VALUES ('Log Lover', 411);
-INSERT INTO level (title, lp_required) VALUES ('Log Lumberjack', 534);
-INSERT INTO level (title, lp_required) VALUES ('Log Llama',  694);
-INSERT INTO level (title, lp_required) VALUES ('Log Leopard', 902);
-INSERT INTO level (title, lp_required) VALUES ('Log Lion', 1173);
-INSERT INTO level (title, lp_required) VALUES ('Log Lunatic', 1525);
-INSERT INTO level (title, lp_required) VALUES ('Log Legionnaire', 1983);
-INSERT INTO level (title, lp_required) VALUES ('Log Lieutenant', 2578);
-INSERT INTO level (title, lp_required) VALUES ('Log Leader', 3351);
-INSERT INTO level (title, lp_required) VALUES ('Log Linchpin', 4356);
-INSERT INTO level (title, lp_required) VALUES ('Log Lord', 5663);
-INSERT INTO level (title, lp_required) VALUES ('Log Legend', 7362);
+INSERT INTO level (title, lp_required) VALUES ('Log Leaf', 50);
+INSERT INTO level (title, lp_required) VALUES ('Log Lemon', 60);
+INSERT INTO level (title, lp_required) VALUES ('Log Lobster', 72);
+INSERT INTO level (title, lp_required) VALUES ('Log Lamb', 86);
+INSERT INTO level (title, lp_required) VALUES ('Log Lizard', 103);
+INSERT INTO level (title, lp_required) VALUES ('Log Leprechaun', 124);
+INSERT INTO level (title, lp_required) VALUES ('Log Lover', 149);
+INSERT INTO level (title, lp_required) VALUES ('Log Lumberjack', 179);
+INSERT INTO level (title, lp_required) VALUES ('Log Llama', 214);
+INSERT INTO level (title, lp_required) VALUES ('Log Leopard', 257);
+INSERT INTO level (title, lp_required) VALUES ('Log Lion',  309);
+INSERT INTO level (title, lp_required) VALUES ('Log Lurker', 371);
+INSERT INTO level (title, lp_required) VALUES ('Log Lunatic', 445);
+INSERT INTO level (title, lp_required) VALUES ('Log Legionnaire', 534);
+INSERT INTO level (title, lp_required) VALUES ('Log Lieutenant', 641);
+INSERT INTO level (title, lp_required) VALUES ('Log Linchpin', 770);
+INSERT INTO level (title, lp_required) VALUES ('Log Loremaster', 924);
+INSERT INTO level (title, lp_required) VALUES ('Log Leader', 1109);
+INSERT INTO level (title, lp_required) VALUES ('Log Lord', 1331);
+INSERT INTO level (title, lp_required) VALUES ('Log Legend', 1597);
 
 ALTER TABLE users ADD "level" INTEGER DEFAULT 1
 CONSTRAINT users_level_fk_level REFERENCES level (id);
