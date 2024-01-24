@@ -1,0 +1,32 @@
+title Sync
+
+participant RN app
+participant loggable-api
+database postgres
+participant postgres
+
+RN app->RN app: App opens or 1 day passes
+activate RN app
+RN app->loggable-api:POST /syncMember { comStats, level, logPoints }
+alt user not logged in
+RN app->loggable-api:POST /syncGuest { comStats }
+end
+activate loggable-api
+loggable-api->postgres: INSERT INTO community ...
+postgres-->loggable-api: [...rows]
+RN app<--loggable-api:{ levelRules, levelDataVersion, comStats }
+deactivate loggable-api
+deactivate RN app
+
+alt local dataRulesVersion < response dataRulesVersion
+RN app->loggable-api: GET /levelData
+activate RN app
+activate loggable-api
+loggable-api->postgres:SELECT * from level_data;
+activate postgres
+postgres-->loggable-api: [...rows]
+deactivate postgres
+loggable-api-->RN app: { dataRulesVersion: 1, ...rules }
+deactivate loggable-api
+deactivate RN app
+end

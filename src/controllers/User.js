@@ -1,6 +1,6 @@
 import UserService from "../services/User";
 import Helpers from "../utils/Helpers";
-import { NoRecordFoundError } from "../utils/CustomErrors";
+import { BadRequestError, NoRecordFoundError } from "../utils/CustomErrors";
 import logger from "../utils/Logger";
 
 const User = {
@@ -16,9 +16,10 @@ const User = {
       email: req.body.email,
       transactionId: req.transactionId,
     });
-    if (!req.body.email || !req.body.password) {
-      const message = "Username or password missing";
+    if (!req.body.username || !req.body.email || !req.body.password) {
+      const message = "Username, email or password missing";
       logger.info(message, {
+        username: req.body.username,
         email: req.body.email,
         transactionId: req.transactionId,
       });
@@ -35,18 +36,33 @@ const User = {
     }
 
     try {
-      const token = await UserService.register(
-        req.body.email.trim().toLowerCase(),
-        req.body.password
+      const sanitisedEmail = req.body.email.trim().toLowerCase();
+      const sanitisedUsername = req.body.username.trim().toLowerCase();
+      const { token, userData } = await UserService.register(
+        sanitisedUsername,
+        sanitisedEmail,
+        req.body.password,
+        req.body.level,
+        req.body.logPoints
       );
-      return res.status(201).send({ token });
+      return res.status(201).send({
+        token,
+        userData,
+      });
     } catch (error) {
       logger.error("failed to register user", {
         error: error.message,
         errorCode: error.code,
         transactionId: req.transactionId,
       });
-      return res.status(400).send({ message: error.message });
+      if (error instanceof BadRequestError) {
+        return res.status(400).send({
+          message: error.message,
+        });
+      }
+      return res.status(500).send({
+        message: "An error has occurred",
+      });
     }
   },
   /**
@@ -57,42 +73,54 @@ const User = {
    * @returns new JWT string as part of express response.
    */
   async login(req, res) {
+    const { transactionId } = req;
     logger.info("received request in /users/login", {
       email: req.body.email,
-      transactionId: req.transactionId,
+      transactionId,
     });
     if (!req.body.email || !req.body.password) {
       const message = "Username or password missing";
       logger.info(message, {
         email: req.body.email,
-        transactionId: req.transactionId,
+        transactionId,
       });
       return res.status(400).send({ message });
     }
     if (!Helpers.isValidEmail(req.body.email)) {
       logger.info("email is not a valid format", {
         email: req.body.email,
-        transactionId: req.transactionId,
+        transactionId,
       });
       return res
         .status(400)
         .send({ message: "Please enter a valid email address" });
     }
     try {
-      const token = await UserService.login(
-        req.body.email.trim().toLowerCase(),
-        req.body.password
+      const sanitisedEmail = req.body.email.trim().toLowerCase();
+      const { token, userData } = await UserService.login(
+        sanitisedEmail,
+        req.body.password,
+        req.body.level,
+        req.body.logPoints
       );
-      return res.status(200).send({ token });
+      return res.status(200).send({
+        token,
+        userData,
+      });
     } catch (error) {
       logger.error("failed to login user", {
         error: error.message,
         errorCode: error.code,
         email: req.body.email,
-        transactionId: req.transactionId,
+        transactionId,
       });
-      return res.status(400).send({
-        message: error.message,
+      if (error instanceof BadRequestError) {
+        return res.status(400).send({
+          message: error.message,
+        });
+      }
+      return res.status(500).send({
+        message: "An error has occurred",
       });
     }
   },
@@ -144,6 +172,31 @@ const User = {
         error: error.message,
         errorCode: error.code,
         emailAddress: req.query.email,
+        transactionId: req.transactionId,
+      });
+      return res.status(500).send({ message: error.message });
+    }
+  },
+  /**
+   * Set username
+   * @param {*} req
+   * @param {*} res
+   */
+  async setUsername(req, res) {
+    logger.info("received request in /users/setUsername", {
+      username: req.body.username,
+      userId: req.user.id,
+      transactionId: req.transactionId,
+    });
+    try {
+      const username = await UserService.setUsername(req.user.id, req.body.username);
+      return res.status(200).send({message: "Username updated", username })
+    } catch (error) {
+      logger.error("failed to set username", {
+        error: error.message,
+        errorCode: error.code,
+        userId: req.user.id,
+        username: req.body.username,
         transactionId: req.transactionId,
       });
       return res.status(500).send({ message: error.message });

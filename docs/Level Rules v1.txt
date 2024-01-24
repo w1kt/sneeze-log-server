@@ -1,0 +1,54 @@
+Level rules v1
+
+Level Rules:
+- Base LP granted (logging points)(b): 10
+- First log of day bonus (f): 300%
+- Momentum bonus (m): 25%
+- LP cooldown: 1 hour
+
+Level 1:
+- LP required: 50
+- Logs required to level (all in one day):
+	- first log: b(10)*f(3)*m(0) = 30
+	- second log: b(10)*f(0)*m(0) = 10
+	- third log: b(10)*f(0)*m(0) = 10 LEVEL UP
+
+Level 2:
+- LP required: 65
+- Logs required to level (subsequent day with 2 days momentum):
+	- first log: b(10)*f(3)*m(1.25) = 37.5
+	- second log: b(10)*f(0)*m(1.25) = 12.5
+	- third log: b(10)*f(0)*m(1.25) = 12.5
+	- fourth log: b(10)*f(0)*m(1.25) = 12.5 LEVEL UP
+
+Level 3:
+- LP required: 84.5
+- Logs required to level (subsequent day with 3 days momentum):
+	- first log: b(10)*f(3)*m(1.5) = 45
+	- second log: b(10)*f(0)*m(1.5) = 15
+	- third log: b(10)*f(0)*m(1.5) = 15
+	- fourth log: b(10)*f(0)*m(1.5) = 15 LEVEL UP
+
+Max possible LP per day = (15(waking hours) * (15)) + 45(daily bonus) = 270
+
+Log Ladder Names and lp required:
+1. Log Laughingstock - 50
+2. Log Leaf - 65
+3. Log Lemon - 85
+4. Log Lobster - 111
+5. Log Lamb - 144
+6. Log Lizard - 187
+7. Log Leprechaun - 243
+8. Log Layman - 316
+9. Log Lover - 411
+10. Log Lumberjack - 534
+11. Log Llama - 694
+12. Log Leopard - 902
+13. Log Lion - 1173
+14. Log Lunatic - 1525
+15. Log Legionnaire - 1983
+16. Log Lieutenant - 2578
+17. Log Leader - 3351
+18. Log Linchpin - 4356
+19. Log Lord - 5663
+20. Log Legend - 7362

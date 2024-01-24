@@ -54,6 +54,23 @@ const Backup = {
     } catch (error) {
       throw error;
     }
+  },
+  /**
+   * Get modified date of a row
+   * @param {*} id 
+   * @returns string
+   */
+  async getModifiedDate(id) {
+    const query = `SELECT modified_date FROM backup WHERE owner_id = '${id}'`;
+    try {
+      const { rows } = await db.query(query);
+      if (!rows[0]) {
+        throw new NoRecordFoundError("No backup found");
+      }
+      return rows[0].modified_date;
+    } catch (error) {
+      throw error;
+    }
   }
 };
 

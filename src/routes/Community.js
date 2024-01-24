@@ -1,3 +1,6 @@
+/**
+ * THIS ROUTE IS DEPRECATED, WILL BE REMOVED ONCE ENOUGH UPGRADE TO NEWEST RN APP
+ */
 import express from 'express';
 import Auth from '../middleware/Auth';
 import Community from '../controllers/Community';

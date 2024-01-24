@@ -1,0 +1,25 @@
+title Register
+
+participant RN app
+participant loggable-api
+database postgres
+
+RN app->loggable-api: /register {email, password, level?, logPoints?}
+activate RN app
+activate loggable-api
+alt #red email invalid | missing
+loggable-api-->RN app: 400
+end
+loggable-api->postgres: insert new user
+activate postgres
+alt #red user already exists
+postgres-->loggable-api: error
+loggable-api-->RN app: 400 user already exists
+end
+
+postgres-->loggable-api:user
+deactivate postgres
+loggable-api-->RN app: 201 { token, userData }
+deactivate loggable-api
+RN app->RN app: store token and userData
+deactivate RN app

@@ -1,5 +1,9 @@
+/**
+ * THIS CONTROLLER IS DEPRECATED, WILL BE REMOVED ONCE ENOUGH UPGRADE TO NEWEST RN APP
+ */
 import CommunityService from "../services/Community";
 import logger from "../utils/Logger";
+
 
 const Community = {
   /**

@@ -2,5 +2,5 @@
   "files.exclude": {
     "src/**/*.js": false
   },
-  "javascript.validate.enable": false
+  "javascript.validate.enable": true
 }
