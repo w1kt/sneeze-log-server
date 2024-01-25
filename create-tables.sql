@@ -1,6 +1,6 @@
-SELECT 'CREATE DATABASE reflection_db'
-WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'reflection_db')\gexec
-\connect reflection_db
+SELECT 'CREATE DATABASE loggable_db'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'loggable_db')\gexec
+\connect loggable_db
 
 CREATE TABLE IF NOT EXISTS
     users(
