@@ -6,14 +6,14 @@ data:
   email-client-address: loggableapp@gmail.com
   email-client-id: 729794276972-06rd2lkqlnvt2m26a5387v91omt0n6h2.apps.googleusercontent.com
   api-url: https://fully-loyal-tahr.ngrok-free.app
-  level-data-version: 1
-  level-rule-base-lp: 10
-  level-rule-lp-cooldown-period: 5
+  level-data-version: "1"
+  level-rule-base-lp: "10"
+  level-rule-lp-cooldown-period: "5"
   level-rule-lp-cooldown-period-type: minutes
-  level-rule-first-of-x-bonus: 3
-  level-rule-first-of-x-period: 1
+  level-rule-first-of-x-bonus: "3"
+  level-rule-first-of-x-period: "1"
   level-rule-first-of-x-period-type: days
-  level-rule-momentum-bonus: 1.25
-  level-rule-momentum-max: 1.5
+  level-rule-momentum-bonus: "1.25"
+  level-rule-momentum-max: "1.5"
   sync-period-type: days
-  sync-period: 1
+  sync-period: "1"
