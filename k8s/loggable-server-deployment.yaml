@@ -89,57 +89,57 @@ spec:
         - name: LEVEL_DATA_VERSION
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-data-version
         - name: LEVEL_RULE_BASE_LP
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-rule-base-lp
         - name: LEVEL_RULE_LP_COOLDOWN_PERIOD
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-rule-lp-cooldown-period
         - name: LEVEL_RULE_LP_COOLDOWN_PERIOD_TYPE
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-rule-lp-cooldown-period-type
         - name: LEVEL_RULE_FIRST_OF_X_BONUS
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-rule-first-of-x-bonus
         - name: LEVEL_RULE_FIRST_OF_X_PERIOD
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-rule-first-of-x-period
         - name: LEVEL_RULE_FIRST_OF_X_PERIOD_TYPE
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-rule-first-of-x-period-type
         - name: LEVEL_RULE_MOMENTUM_BONUS
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-rule-momentum-bonus
         - name: LEVEL_RULE_MOMENTUM_MAX
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: level-rule-momentum-max
         - name: SYNC_PERIOD_TYPE
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: sync-period-type
         - name: SYNC_PERIOD
           valueFrom:
             configMapKeyRef:
-              name: loggable-server-config
+              name: loggable-server-configmap
               key: sync-period
       imagePullSecrets:
         - name: regcred
